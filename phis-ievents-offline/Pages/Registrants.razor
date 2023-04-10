@@ -1,0 +1,47 @@
+﻿@page "/registrants"
+
+@using phis_ievents_offline.Data
+
+<h1>Registrants</h1>
+@if (registrants == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Employee Id</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Schedule</th>
+                <th>Group</th>
+                <th>Room</th>
+                <th>Dietary Restriction</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var registrant in registrants)
+            {
+                <tr>
+                    <td>@registrant.EmployeeId</td>
+                    <td>@($"{registrant.FirstName} {registrant.LastName}")</td>
+                    <td>@registrant.Department</td>
+                    <td>@registrant.Schedule</td>
+                    <td>@registrant.Group</td>
+                    <td>@registrant.Room</td>
+                    <td>@registrant.DietaryRestriction</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Registrant> registrants;
+    protected override async Task OnInitializedAsync()
+    {
+        registrants = await RegistrantService.GetRegistrantsAsync();
+    }
+}

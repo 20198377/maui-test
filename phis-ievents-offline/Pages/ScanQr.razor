@@ -1,0 +1,76 @@
+﻿@page "/scanqr"
+@inject IJSRuntime JS
+@inject phis_ievents_offline.Data.ICameraInterop Interop
+
+<h1>Scan QR</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<div id="test"></div>
+<div id="container">
+    <h1>Save the camera's picture to a file</h1>
+    <video id="player" autoplay></video>
+    <button id="capture-button" title="Take a picture"></button>
+</div>
+<canvas id="output"></canvas>
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+
+        Interop.CaptureAsync();
+    }
+
+}
+
+<style>
+
+
+h1 {
+  color: #fff;
+  font-family: Sarala, Arial, sans-serif;
+  font-size: 22px;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#container {
+  max-width: 80vw;
+  max-height: 80vh;
+  position: relative;
+}
+
+#player {
+  width: 100%;
+  border: 2px solid #111;
+  box-shadow: 0 0 50px #111;
+}
+
+#capture-button {
+  display: block;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  bottom: 20px;
+  left: 50%;
+  margin-left: -25px;
+  border-radius: 50%;
+  background-color: #ff0000;
+  border: 2px solid #fff;
+  cursor: pointer;
+  transition: all .15s ease-in-out;
+  opacity: 0.5;
+  outline: none;
+ 
+}
+
+#output {
+  display: none;
+}
+
+</style>
